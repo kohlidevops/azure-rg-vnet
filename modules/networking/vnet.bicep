@@ -2,15 +2,8 @@ param vnetName string
 param location string
 
 param addressPrefixes array
-
 param subnets array
-
 param tags object
-
-
-//===================================================
-// VIRTUAL NETWORK
-//===================================================
 
 resource vnet 'Microsoft.Network/virtualNetworks@2025-05-01' = {
   name: vnetName
@@ -34,20 +27,4 @@ resource vnet 'Microsoft.Network/virtualNetworks@2025-05-01' = {
   }
 }
 
-
-//===================================================
-// OUTPUTS
-//===================================================
-
 output vnetId string = vnet.id
-
-output vnetName string = vnet.name
-
-output subnetIds array = [
-  for subnet in subnets:
-    resourceId(
-      'Microsoft.Network/virtualNetworks/subnets',
-      vnet.name,
-      subnet.name
-    )
-]
